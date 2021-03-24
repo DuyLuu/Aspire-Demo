@@ -1,0 +1,12 @@
+{
+  "name": "Aspire-Demo",
+  "displayName": "Aspire-Demo",
+  "expo": {
+    "name": "Aspire-Demo",
+    "slug": "Aspire-Demo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
