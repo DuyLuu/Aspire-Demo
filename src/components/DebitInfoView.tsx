@@ -1,14 +1,17 @@
 /* @flow */
 
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 
 import R from '../resources'
+import CardView from './CardView'
+
+const SCREEN_HEIGHT = Dimensions.get('window').height
 
 const DebitInfoView = () : JSX.Element => {
     return (
         <View style={styles.container}>
-
+            <CardView />
         </View>
     )
 }
@@ -16,8 +19,8 @@ const DebitInfoView = () : JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: 130,
-        backgroundColor: R.Colors.primary,
+        height: SCREEN_HEIGHT,
+        backgroundColor: R.Colors.header,
     },
 })
 
