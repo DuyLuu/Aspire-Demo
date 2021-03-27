@@ -2,9 +2,11 @@ import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native'
 
+import DebitInfoView from './DebitInfoView'
+
 const Dimension = Dimensions.get('window')
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <View style={styles.container}>
       	<ScrollView
@@ -14,10 +16,7 @@ const App = () => {
 			alwaysBounceVertical={true}
 		>
 			<View>
-				<View style={styles.content1}/>
-				<View style={styles.content2}/>
-				<View style={styles.content3}/>
-				<View style={styles.content4}/>
+				<DebitInfoView />
 			</View>
       	</ScrollView>
     </View>
@@ -42,29 +41,4 @@ const styles = StyleSheet.create({
 		height: Dimension.height - 100,
 		backgroundColor: 'transparent',
   	},
-	content1: {
-		backgroundColor: 'grey',
-		width: '100%',
-		height: 200,
-	},
-	content2: {
-		backgroundColor: 'white',
-		width: '100%',
-		height: 200,
-	},
-	content3: {
-		backgroundColor: 'grey',
-		width: '100%',
-		height: 200,
-	},
-	content4: {
-		backgroundColor: 'white',
-		width: '100%',
-		height: 200,
-	},
-	content5: {
-		backgroundColor: 'grey',
-		width: '100%',
-		height: 200,
-	},
 })
