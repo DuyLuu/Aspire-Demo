@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "esnext",
+        "jsx": "react"
+    },
+    "include": ["./src/**/*", "index.tsx"],
+    "exclude": [
+        "node_modules",
+        "babel.config.js",
+    ]
+}
