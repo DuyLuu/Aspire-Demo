@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
 		paddingTop: 120,
 	},
   	scrollView: {
-    	marginTop: 80,
 		width: '100%',
 		height: Dimension.height - 100,
 		backgroundColor: 'transparent',

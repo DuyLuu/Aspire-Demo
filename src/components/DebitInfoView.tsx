@@ -4,6 +4,7 @@ import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 
 import R from '../resources'
+import CardSettingsList from './CardSettingsList'
 import CardView from './CardView'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -11,6 +12,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height
 const DebitInfoView = () : JSX.Element => {
     return (
         <View style={styles.container}>
+            <CardSettingsList />
             <CardView />
         </View>
     )

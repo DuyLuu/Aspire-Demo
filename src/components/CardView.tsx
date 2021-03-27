@@ -2,11 +2,12 @@
 
 import React, { useState } from 'react'
 import {
-    View, StyleSheet, Image, Text, TouchableWithoutFeedback,
+    View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions,
 } from 'react-native'
 import R from '../resources'
 
 const PADDING = 24
+const WIDTH = Dimensions.get('window').width
 
 const userInfo = {
     name: "Mark Henry",
@@ -65,16 +66,18 @@ const hideNumber = (input: string): string => {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        ...StyleSheet.absoluteFillObject,
+        width: WIDTH - 48,
         height: 255,
         backgroundColor: 'transparent',
         alignItems: "flex-end",
+        marginLeft: 24,
     },
     cardView: {
         ...StyleSheet.absoluteFillObject,
         top: 35,
         backgroundColor: R.Colors.primary,
-        borderRadius: 8,
+        borderRadius: 12,
         padding: PADDING,
     },
     aspireLogo: {
@@ -121,7 +124,8 @@ const styles = StyleSheet.create({
     hideCardNumer: {
         width: 151,
         height: 44,
-        borderRadius: 4,
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
         backgroundColor: "white",
         flexDirection: 'row',
         justifyContent: 'center',
