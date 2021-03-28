@@ -3,6 +3,7 @@ export default {
     ShowNumberIcon: require('./remove_red_eye-24px.png'),
     AspireLogo: require('./Aspire_Logo.png'),
     VisaLogo: require('./Visa_Logo.png'),
+    Logo: require('./Logo.png'),
 
     Topup: require('./insight.png'),
     SpendingLimit: require('./Transfer-2.png'),

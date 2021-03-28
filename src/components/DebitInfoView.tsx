@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: SCREEN_HEIGHT,
-        backgroundColor: R.Colors.header,
+        backgroundColor: 'transparent',
     },
 })
 
