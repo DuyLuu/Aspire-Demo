@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 
 import R from '../resources'
+import BalanceView from './BalanceView'
 
 import DebitInfoView from './DebitInfoView'
 import TopView from './TopView'
@@ -18,14 +19,11 @@ const DebitCardScreen = (): JSX.Element => {
 			backgroundColor="transparent"
 			barStyle="light-content"
 		/>
-		<TopView />
-		<Text style={styles.availableBalance}>Available balance</Text>
-		<View style={styles.balanceView}>
-			<View style={styles.currencyView}>
-				<Text style={styles.currencyText}>S$</Text>
-			</View>
-			<Text style={styles.balanceAmount}>3,000</Text>
-		</View>
+		<TopView title="Debit Card" />
+        <View style={styles.balanceView}>
+            <Text style={styles.availableBalance}>Available balance</Text>
+            <BalanceView amount="3,000" />
+        </View>
       	<ScrollView
 		  	showsVerticalScrollIndicator={false}
 			style={styles.scrollView}
@@ -48,35 +46,12 @@ const styles = StyleSheet.create({
 	availableBalance: {
 		color: 'white',
 		fontSize: 14,
-		marginTop: 24,
+        marginBottom: 8,
+	},
+    balanceView: {
+        marginTop: 24,
 		marginLeft: 24,
-	},
-	balanceView: {
-		flexDirection: 'row',
-		marginTop: 16,
-		marginLeft: 24,
-		height: 33,
-		alignItems: 'center',
-	},
-	currencyView: {
-		width: 40,
-		height: 22,
-		backgroundColor: R.Colors.primary,
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRadius: 4,
-		marginRight: 10,
-	},
-	currencyText: {
-		color: 'white',
-		fontSize: 12,
-		fontWeight: 'bold',
-	},
-	balanceAmount: {
-		color: 'white',
-		fontSize: 24,
-		fontWeight: 'bold',
-	},
+    },
 	scrollViewContentStyle: {
 		paddingTop: 180,
 	},

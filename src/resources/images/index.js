@@ -10,4 +10,6 @@ export default {
     FreezeCard: require('./Transfer-3.png'),
     NewCard: require('./Transfer-1.png'),
     DeactivatedCard: require('./Transfer.png'),
+    Back: require('./back.png'),
+    SpendingLimitIcon: require('./spend_limit.png')
 }

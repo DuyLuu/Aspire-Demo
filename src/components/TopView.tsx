@@ -1,14 +1,37 @@
 import React from 'react'
 
-import { View, Text, Image, StyleSheet } from 'react-native'
+import {
+    View, Text, Image, StyleSheet, TouchableOpacity,
+} from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import R from '../resources'
 
-const TopView = (): JSX.Element => {
+type Props = {
+    title?: string,
+    backButton?: boolean,
+}
+
+const TopView = (props: Props): JSX.Element => {
+    const { title = '', backButton = false } = props
+    const navigation = useNavigation()
+
+    const renderTitle = (): JSX.Element | undefined => {
+        if (title) {
+            return <Text style={styles.screenName}>{title}</Text>
+        }
+        return undefined
+    }
+    const onBackPress = (): void => {
+        navigation.goBack()
+    }
     return (
         <View style={styles.container}>
+            {renderTitle()}
+            <TouchableOpacity onPress={onBackPress}>
+                {backButton && <Image source={R.Images.Back} style={styles.backButton} />}
+            </TouchableOpacity>
             <Image source={R.Images.Logo} style={styles.logo}/>
-            <Text style={styles.screenName}>Debit Card</Text>
         </View>
     )
 }
@@ -20,7 +43,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 24,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
+    },
+    backButton: {
+        width: 24,
+        height: 24,
     },
     screenName: {
         position: 'absolute',
