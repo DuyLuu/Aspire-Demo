@@ -1,23 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
-    SafeAreaView, StyleSheet, Text, View, Image, Dimensions,
+    SafeAreaView, StyleSheet, Text,
+    View, Image, Dimensions,
+    TouchableOpacity,
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { connect, ConnectedProps } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 import R from '../resources'
 import BalanceView from './BalanceView'
 import TopView from './TopView'
 
+import { UserAction } from '../actions'
+
 const SCREEN_WIDTH = Dimensions.get('window').width
 const PADDING_SAVE_BUTTON = 56
-const ListSpendingLimit = [
-    '5,000',
-    '10,000',
-    '20,000',
-]
 
-const SpendingLimitScreen = (): JSX.Element => {
+type MappedProps = {
+    spendingLimit: string
+}
+const mapState = (state: RootState): MappedProps => ({
+    spendingLimit: state.user.spendingLimit,
+})
+
+const mapDispatch = {
+    updateSpendingLimit: UserAction.updateSpendingLimit,
+}
+
+const connector = connect(mapState, mapDispatch)
+interface Props extends ConnectedProps<typeof connector> {}
+
+const SpendingLimitScreen = (props: Props): JSX.Element => {
+    const { updateSpendingLimit, spendingLimit } = props
+    const navigation = useNavigation()
+    const currentLimitIndex = Math.max(R.Constants.ListSpendingLimit.findIndex(item => item === spendingLimit), 0)
+    const [selectedIndex, setSelectedIndex] = useState(currentLimitIndex)
+    const selectSpendingLimit = (index: number) => () => {
+        setSelectedIndex(index)
+    }
+    const selectedValue = R.Constants.ListSpendingLimit[selectedIndex]
+
+    const saveSpendingLimit = (): void => {
+        updateSpendingLimit(selectedValue)
+        navigation.goBack()
+    }
     return (
         <SafeAreaView style={styles.container}>
             <TopView backButton={true} />
@@ -28,15 +55,22 @@ const SpendingLimitScreen = (): JSX.Element => {
                         <Image source={R.Images.SpendingLimitIcon} style={styles.icon} />
                         <Text style={styles.guideline}>Set a weekly debit card spending limit</Text>
                     </View>
-                    <BalanceView amount="5,000" textColor="#000000"/>
+                    <BalanceView amount={selectedValue} textColor="#000000"/>
                     <View style={styles.line} />
                     <Text style={styles.descriptionText}>
                         Here weekly means the last 7 days - not the calendar week
                     </Text>
                     <View style={styles.selectingView}>
-                        {ListSpendingLimit.map((value: string) => {
+                        {R.Constants.ListSpendingLimit.map((value: string, index: number) => {
+                            const hightlightStyle = index === selectedIndex ? {
+                                borderWidth: 2, borderColor: R.Colors.primary,
+                            }: {}
                             return (
-                                <TouchableOpacity style={styles.selectedButton}>
+                                <TouchableOpacity
+                                    key={`${value}-${index}`}
+                                    style={[styles.selectedButton, hightlightStyle]}
+                                    onPress={selectSpendingLimit(index)}
+                                >
                                     <Text style={styles.selectedButtonText}>
                                         {`S$ ${value}`}
                                     </Text>
@@ -45,7 +79,7 @@ const SpendingLimitScreen = (): JSX.Element => {
                         })}
                     </View>
                 </View>
-                <TouchableOpacity style={styles.saveButton}>
+                <TouchableOpacity style={styles.saveButton} onPress={saveSpendingLimit}>
                     <Text style={styles.saveButtonTitle}>Save</Text>
                 </TouchableOpacity>
             </View>
@@ -70,8 +104,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 0,
         backgroundColor: 'white',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
+        borderRadius: 24,
         padding: 24,
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -132,4 +165,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SpendingLimitScreen
+export default connector(SpendingLimitScreen)

@@ -36,3 +36,9 @@ export const CardSettingsListInfo = [{
     haveSwitch: false,
     icon: Images.DeactivatedCard,
 }]
+
+export const ListSpendingLimit = [
+    '5,000',
+    '10,000',
+    '20,000',
+]

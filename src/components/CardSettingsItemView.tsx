@@ -19,9 +19,13 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
     } = props.data
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+    const toggleSwitch = () => {
+        setIsEnabled(!isEnabled)
+        type === R.Enums.CardActionType.SPENDING_LIMIT
+        && props.toggleSwitch?.(!isEnabled)
+    }
     useEffect(() => {
-        if (isEnabled) {
+        if (isEnabled && type === R.Enums.CardActionType.SPENDING_LIMIT) {
             navigation.navigate('SpendingLimit')
         }
     }, [isEnabled])
@@ -39,6 +43,7 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
                 thumbColor={"#ffffff"}
                 ios_backgroundColor="#eeeeee"
                 // onValueChange={toggleSwitch}
+                disable={true}
                 value={isEnabled}
             />}
         </TouchableOpacity>
