@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import {
     View, StyleSheet, Image, Text, Switch,
 } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import R from '../resources'
 
@@ -12,12 +14,20 @@ type Props = {
 }
 
 const CardSettingsItemView = (props: Props): JSX.Element => {
-    const { title, sub, haveSwitch, icon } = props.data
+    const {
+        title, sub, haveSwitch, icon, type,
+    } = props.data
+    const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = () => setIsEnabled(previousState => !previousState)
+    useEffect(() => {
+        if (isEnabled) {
+            navigation.navigate('SpendingLimit')
+        }
+    }, [isEnabled])
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={toggleSwitch}>
             <Image source={icon} style={styles.icon}/>
             <View>
                 <Text style={styles.title}>{title}</Text>
@@ -28,10 +38,10 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
                 trackColor={{ false: "#eeeeee", true: R.Colors.primary }}
                 thumbColor={"#ffffff"}
                 ios_backgroundColor="#eeeeee"
-                onValueChange={toggleSwitch}
+                // onValueChange={toggleSwitch}
                 value={isEnabled}
             />}
-        </View>
+        </TouchableOpacity>
     )
 }
 
