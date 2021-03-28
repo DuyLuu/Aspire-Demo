@@ -10,11 +10,12 @@ import BalanceView from './BalanceView'
 import DebitInfoView from './DebitInfoView'
 import TopView from './TopView'
 import { UserAction } from '../actions'
+import { UserInfoType } from '../types'
 
 const Dimension = Dimensions.get('window')
 
 type MappedProps = {
-    userInfo: Object
+    userInfo: UserInfoType
 }
 const mapState = (state: RootState): MappedProps => ({
     userInfo: state.user.userInfo,

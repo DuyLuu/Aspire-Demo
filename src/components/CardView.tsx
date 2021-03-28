@@ -7,12 +7,13 @@ import {
 import { ConnectedProps, connect } from 'react-redux'
 
 import R from '../resources'
+import { UserInfoType } from '../types'
 
 const PADDING = 24
 const WIDTH = Dimensions.get('window').width
 
 type MappedProps = {
-    userInfo: Object
+    userInfo: UserInfoType
 }
 const mapState = (state: RootState): MappedProps => ({
     userInfo: state.user.userInfo,
@@ -30,8 +31,9 @@ const CardView = (props: Props): JSX.Element => {
     const textHideNumberButton = hideCardNumber ? "Hide card number" : "Show card number"
     const iconHideNumberButton = hideCardNumber ? R.Images.HideNumberIcon : R.Images.ShowNumberIcon
 
-    const cvvText = hideCardNumber ? userInfo.cvv : "***"
-    const numerCard = hideCardNumber ? formartNumberCard(userInfo.cardNumber) : hideNumber(userInfo.cardNumber)
+    const cvvText = hideCardNumber ? userInfo?.cvv : "***"
+    const numerCard = userInfo?.cardNumber
+        && (hideCardNumber ? formartNumberCard(userInfo?.cardNumber) : hideNumber(userInfo?.cardNumber))
 
     return (
         <View style={styles.container}>
@@ -47,10 +49,10 @@ const CardView = (props: Props): JSX.Element => {
             <View style={styles.cardView}>
                 <Image source={R.Images.AspireLogo} style={styles.aspireLogo} />
                 <Image source={R.Images.VisaLogo} style={styles.visaLogo} />
-                <Text style={styles.userName}>{userInfo.name}</Text>
+                <Text style={styles.userName}>{userInfo?.name}</Text>
                 <Text style={styles.cardNumber}>{numerCard}</Text>
                 <View style={styles.expireView}>
-                    <Text style={styles.expireDateText}>{`Thru: ${userInfo.expireDate}`}</Text>
+                    <Text style={styles.expireDateText}>{`Thru: ${userInfo?.expireDate}`}</Text>
                     <Text style={styles.cvvText}>{`CVV: ${cvvText}`}</Text>
                 </View>
             </View>
