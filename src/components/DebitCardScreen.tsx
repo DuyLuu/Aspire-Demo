@@ -1,42 +1,62 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
 	StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, StatusBar,
 } from 'react-native'
+import { ConnectedProps, connect } from 'react-redux'
 
 import R from '../resources'
 import BalanceView from './BalanceView'
 
 import DebitInfoView from './DebitInfoView'
 import TopView from './TopView'
+import { UserAction } from '../actions'
 
 const Dimension = Dimensions.get('window')
 
-const DebitCardScreen = (): JSX.Element => {
-  return (
-    <SafeAreaView style={styles.container}>
-		<StatusBar
-			translucent
-			backgroundColor="transparent"
-			barStyle="light-content"
-		/>
-		<TopView title="Debit Card" />
-        <View style={styles.balanceView}>
-            <Text style={styles.availableBalance}>Available balance</Text>
-            <BalanceView amount="3,000" />
-        </View>
-      	<ScrollView
-		  	showsVerticalScrollIndicator={false}
-			style={styles.scrollView}
-			contentContainerStyle={styles.scrollViewContentStyle}
-			alwaysBounceVertical={true}
-		>
-			<DebitInfoView />
-      	</ScrollView>
-    </SafeAreaView>
-  )
+type MappedProps = {
+    userInfo: Object
+}
+const mapState = (state: RootState): MappedProps => ({
+    userInfo: state.user.userInfo,
+})
+
+const mapDispatch = {
+    getUserInfo: UserAction.getUserInfo,
 }
 
-export default DebitCardScreen
+const connector = connect(mapState, mapDispatch)
+interface Props extends ConnectedProps<typeof connector> {}
+
+const DebitCardScreen = (props: Props): JSX.Element => {
+	const { userInfo, getUserInfo } = props
+	useEffect(() => {
+		getUserInfo()
+	},[])
+  	return (
+		<SafeAreaView style={styles.container}>
+			<StatusBar
+				translucent
+				backgroundColor="transparent"
+				barStyle="light-content"
+			/>
+			<TopView title="Debit Card" />
+			<View style={styles.balanceView}>
+				<Text style={styles.availableBalance}>Available balance</Text>
+				<BalanceView amount={userInfo?.availableBalance} />
+			</View>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				style={styles.scrollView}
+				contentContainerStyle={styles.scrollViewContentStyle}
+				alwaysBounceVertical={true}
+			>
+				<DebitInfoView />
+			</ScrollView>
+		</SafeAreaView>
+  	)
+}
+
+export default connector(DebitCardScreen)
 
 const styles = StyleSheet.create({
   	container: {

@@ -7,16 +7,18 @@ import R from '../resources'
 import CardSettingsItemView from './CardSettingsItemView'
 
 type MappedProps = {
-    spendingLimit: string
+    spendingLimit: string,
+    currentSpending: number,
 }
 const mapState = (state: RootState): MappedProps => ({
-    spendingLimit: state.user.spendingLimit,
+    spendingLimit: state.user?.spendingLimit,
+    currentSpending: state.user?.userInfo?.spending,
 })
 const connector = connect(mapState, null)
 interface Props extends ConnectedProps<typeof connector> {}
 
 const CardSettingsList = (props: Props): JSX.Element => {
-    const { spendingLimit } = props
+    const { spendingLimit, currentSpending } = props
     const [showSpendingLimit, setShowSpendingLimit] = useState(false)
     const toggeSwitch = (value: boolean): void => {
         setShowSpendingLimit(value)
@@ -27,7 +29,7 @@ const CardSettingsList = (props: Props): JSX.Element => {
                 <View style={styles.spendingLimit}>
                     <Text>Debit card spending limit</Text>
                     <Text>
-                        <Text style={styles.currentSpend}>$0</Text>
+                        <Text style={styles.currentSpend}>{`$${currentSpending}`}</Text>
                         <Text style={styles.spendingLimitText}>{` | $${spendingLimit}`}</Text>
                     </Text>
                 </View>

@@ -1,5 +1,6 @@
 const initialState = {
-    spendingLimit: ''
+    spendingLimit: '',
+    userInfo: undefined,
 }
 
 export default (state = initialState, action) => {
@@ -10,6 +11,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 spendingLimit,
+            }
+        case 'GET_USER_INFO':
+            const [data] = payload
+            return {
+                ...state,
+                userInfo: data,
             }
         default:
             return state

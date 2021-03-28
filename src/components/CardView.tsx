@@ -4,22 +4,25 @@ import React, { useState } from 'react'
 import {
     View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions,
 } from 'react-native'
+import { ConnectedProps, connect } from 'react-redux'
+
 import R from '../resources'
 
 const PADDING = 24
 const WIDTH = Dimensions.get('window').width
 
-const userInfo = {
-    name: "Mark Henry",
-    number: "0000123492220033",
-    expireDate: "12/21",
-    cvv: "456", 
+type MappedProps = {
+    userInfo: Object
 }
+const mapState = (state: RootState): MappedProps => ({
+    userInfo: state.user.userInfo,
+})
 
-type Props = {
-}
+const connector = connect(mapState, null)
+interface Props extends ConnectedProps<typeof connector> {}
 
 const CardView = (props: Props): JSX.Element => {
+    const { userInfo } = props
     const [hideCardNumber, setHideCardNumber] = useState(false)
     const hideCardNumberAction = (): void => {
         setHideCardNumber(!hideCardNumber)
@@ -28,7 +31,7 @@ const CardView = (props: Props): JSX.Element => {
     const iconHideNumberButton = hideCardNumber ? R.Images.HideNumberIcon : R.Images.ShowNumberIcon
 
     const cvvText = hideCardNumber ? userInfo.cvv : "***"
-    const numerCard = hideCardNumber ? formartNumberCard(userInfo.number) : hideNumber(userInfo.number)
+    const numerCard = hideCardNumber ? formartNumberCard(userInfo.cardNumber) : hideNumber(userInfo.cardNumber)
 
     return (
         <View style={styles.container}>
@@ -142,4 +145,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default CardView
+export default connector(CardView)
