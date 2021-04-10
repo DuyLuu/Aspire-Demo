@@ -8,8 +8,9 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import { configReduxStore } from './src/reducers'
 import App from './src/components/App'
+import rootSaga from './src/reducers/saga'
 
-const { persistor, store } = configReduxStore()
+const { persistor, store, sagaMiddleware } = configReduxStore()
 
 const Root = (): JSX.Element => {
     return (
@@ -20,4 +21,7 @@ const Root = (): JSX.Element => {
         </Provider>
     )
 }
+
+sagaMiddleware.run(rootSaga)
+
 registerRootComponent(Root)

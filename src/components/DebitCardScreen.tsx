@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import {
-	StyleSheet, Text, View, ScrollView, Dimensions, SafeAreaView, StatusBar,
+	StyleSheet, Text, View, ScrollView,
+	Dimensions, SafeAreaView, StatusBar,
 } from 'react-native'
-import { ConnectedProps, connect } from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 
 import R from '../resources'
 import BalanceView from './BalanceView'
@@ -11,28 +12,34 @@ import DebitInfoView from './DebitInfoView'
 import TopView from './TopView'
 import { UserAction } from '../actions'
 import { UserInfoType } from '../types'
+import { RootState } from '../reducers'
 
 const Dimension = Dimensions.get('window')
 
 type MappedProps = {
-    userInfo: UserInfoType
+    availableBalance: string
 }
-const mapState = (state: RootState): MappedProps => ({
-    userInfo: state.user.userInfo,
-})
+const mapState = (state: RootState): MappedProps => {
+	return {
+		availableBalance: state.user?.userInfo?.availableBalance,
+	}
+}
 
-const mapDispatch = {
-    getUserInfo: UserAction.getUserInfo,
+const mapDispatch = (dispatch) => {
+	return {
+		getUserInfo: () => dispatch(UserAction.getUserInfo()),
+	}
 }
 
 const connector = connect(mapState, mapDispatch)
 interface Props extends ConnectedProps<typeof connector> {}
 
 const DebitCardScreen = (props: Props): JSX.Element => {
-	const { userInfo, getUserInfo } = props
+	const { getUserInfo, availableBalance } = props
 	useEffect(() => {
 		getUserInfo()
-	},[])
+	}, [getUserInfo])
+
   	return (
 		<SafeAreaView style={styles.container}>
 			<StatusBar
@@ -43,7 +50,7 @@ const DebitCardScreen = (props: Props): JSX.Element => {
 			<TopView title="Debit Card" />
 			<View style={styles.balanceView}>
 				<Text style={styles.availableBalance}>Available balance</Text>
-				<BalanceView amount={userInfo?.availableBalance} />
+				<BalanceView amount={availableBalance} />
 			</View>
 			<ScrollView
 				showsVerticalScrollIndicator={false}
