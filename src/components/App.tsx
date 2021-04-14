@@ -6,8 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { DebitNavigator } from '../types'
 
-import DebitCardScreen from './DebitCardScreen'
-import SpendingLimitScreen from './SpendingLimitScreen'
+import DebitCardScreen from './debit/DebitCardScreen'
+import SpendingLimitScreen from './spending/SpendingLimitScreen'
 
 const MainStack = createStackNavigator<DebitNavigator>()
 

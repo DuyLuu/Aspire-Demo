@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 
 import {
     SafeAreaView, StyleSheet, Text,
@@ -8,11 +8,11 @@ import {
 import { connect, ConnectedProps } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
-import R from '../resources'
-import BalanceView from './BalanceView'
-import TopView from './TopView'
+import R from '../../resources'
+import BalanceView from '../debit/BalanceView'
+import TopView from '../TopView'
 
-import { UserAction } from '../actions'
+import { UserAction } from '../../actions'
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const PADDING_SAVE_BUTTON = 56
@@ -36,15 +36,15 @@ const SpendingLimitScreen = (props: Props): JSX.Element => {
     const navigation = useNavigation()
     const currentLimitIndex = Math.max(R.Constants.ListSpendingLimit.findIndex(item => item === spendingLimit), 0)
     const [selectedIndex, setSelectedIndex] = useState(currentLimitIndex)
-    const selectSpendingLimit = (index: number) => () => {
+    const selectSpendingLimit = useCallback((index: number) => () => {
         setSelectedIndex(index)
-    }
+    }, [setSelectedIndex])
     const selectedValue = R.Constants.ListSpendingLimit[selectedIndex]
 
-    const saveSpendingLimit = (): void => {
+    const saveSpendingLimit = useCallback((): void => {
         updateSpendingLimit(selectedValue)
         navigation.goBack()
-    }
+    }, [navigation, updateSpendingLimit, selectedValue])
     return (
         <SafeAreaView style={styles.container}>
             <TopView backButton={true} />

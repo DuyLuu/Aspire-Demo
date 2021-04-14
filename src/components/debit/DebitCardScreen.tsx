@@ -5,14 +5,14 @@ import {
 } from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
 
-import R from '../resources'
+import R from '../../resources'
 import BalanceView from './BalanceView'
 
 import DebitInfoView from './DebitInfoView'
-import TopView from './TopView'
-import { UserAction } from '../actions'
-import { UserInfoType } from '../types'
-import { RootState } from '../reducers'
+import TopView from '../TopView'
+import { UserAction } from '../../actions'
+import { UserInfoType } from '../../types'
+import { RootState } from '../../reducers'
 
 const Dimension = Dimensions.get('window')
 

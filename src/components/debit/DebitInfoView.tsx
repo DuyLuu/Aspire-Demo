@@ -3,7 +3,7 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 
-import R from '../resources'
+import R from '../../resources'
 import CardSettingsList from './CardSettingsList'
 import CardView from './CardView'
 

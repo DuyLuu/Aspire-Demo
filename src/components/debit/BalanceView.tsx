@@ -2,7 +2,7 @@ import React from 'react'
 
 import { StyleSheet, View, Text } from 'react-native'
 
-import R from '../resources'
+import R from '../../resources'
 
 type Props = {
     amount: string,

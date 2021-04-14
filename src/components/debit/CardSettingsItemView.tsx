@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import R from '../resources'
+import R from '../../resources'
 
 type Props = {
     data: Object,
@@ -19,11 +19,11 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
     } = props.data
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => {
+    const toggleSwitch = useCallback(() => {
         setIsEnabled(!isEnabled)
         type === R.Enums.CardActionType.SPENDING_LIMIT
         && props.toggleSwitch?.(!isEnabled)
-    }
+    }, [props.toggleSwitch])
     useEffect(() => {
         if (isEnabled && type === R.Enums.CardActionType.SPENDING_LIMIT) {
             navigation.navigate('SpendingLimit')

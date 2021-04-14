@@ -1,13 +1,13 @@
 /* @flow */
 
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
     View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions,
 } from 'react-native'
 import { ConnectedProps, connect } from 'react-redux'
 
-import R from '../resources'
-import { UserInfoType } from '../types'
+import R from '../../resources'
+import { UserInfoType } from '../../types'
 
 const PADDING = 24
 const WIDTH = Dimensions.get('window').width
@@ -25,9 +25,9 @@ interface Props extends ConnectedProps<typeof connector> {}
 const CardView = (props: Props): JSX.Element => {
     const { userInfo } = props
     const [hideCardNumber, setHideCardNumber] = useState(false)
-    const hideCardNumberAction = (): void => {
+    const hideCardNumberAction = useCallback((): void => {
         setHideCardNumber(!hideCardNumber)
-    }
+    })
     const textHideNumberButton = hideCardNumber ? "Hide card number" : "Show card number"
     const iconHideNumberButton = hideCardNumber ? R.Images.HideNumberIcon : R.Images.ShowNumberIcon
 

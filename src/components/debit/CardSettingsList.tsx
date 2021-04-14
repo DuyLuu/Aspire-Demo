@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { FlatList, View, StyleSheet, Text } from 'react-native'
 import { ConnectedProps, connect } from 'react-redux'
 
-import R from '../resources'
+import R from '../../resources'
 import CardSettingsItemView from './CardSettingsItemView'
 
 type MappedProps = {
