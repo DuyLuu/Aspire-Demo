@@ -20,9 +20,7 @@ interface Props extends ConnectedProps<typeof connector> {}
 const CardSettingsList = (props: Props): JSX.Element => {
     const { spendingLimit, currentSpending } = props
     const [showSpendingLimit, setShowSpendingLimit] = useState(false)
-    const toggeSwitch = (value: boolean): void => {
-        setShowSpendingLimit(value)
-    }
+
     return (
         <View style={styles.container}>
             {showSpendingLimit && (
@@ -39,7 +37,7 @@ const CardSettingsList = (props: Props): JSX.Element => {
                     <CardSettingsItemView
                         key={`${item.title}-${index}`}
                         data={item}
-                        toggleSwitch={toggeSwitch}
+                        showSpendingLimit={(value) => setShowSpendingLimit(value)}
                     />
                 )
             })}

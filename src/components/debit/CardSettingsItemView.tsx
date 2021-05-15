@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-
 import {
     View, StyleSheet, Image, Text, Switch,
 } from 'react-native'
@@ -10,7 +9,7 @@ import R from '../../resources'
 
 type Props = {
     data: Object,
-    toggleSwitch?: Function,
+    showSpendingLimit?: Function,
 }
 
 const CardSettingsItemView = (props: Props): JSX.Element => {
@@ -19,19 +18,26 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
     } = props.data
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = useCallback(() => {
-        setIsEnabled(!isEnabled)
+    const toggleSwitch = (value: boolean) => {
+        setIsEnabled(value)
+    }
+    const updateStatusSpendingLimit = useCallback(() => {
         type === R.Enums.CardActionType.SPENDING_LIMIT
-        && props.toggleSwitch?.(!isEnabled)
-    }, [props.toggleSwitch])
+                && props.showSpendingLimit?.(isEnabled)
+    }, [isEnabled])
+    useEffect(() => {
+        const didFocusListener = navigation.addListener('focus', updateStatusSpendingLimit)
+        return didFocusListener
+    }, [updateStatusSpendingLimit])
     useEffect(() => {
         if (isEnabled && type === R.Enums.CardActionType.SPENDING_LIMIT) {
             navigation.navigate('SpendingLimit')
         }
+        !isEnabled && updateStatusSpendingLimit()
     }, [isEnabled])
 
     return (
-        <TouchableOpacity style={styles.container} onPress={toggleSwitch}>
+        <View style={styles.container}>
             <Image source={icon} style={styles.icon}/>
             <View>
                 <Text style={styles.title}>{title}</Text>
@@ -42,11 +48,11 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
                 trackColor={{ false: "#eeeeee", true: R.Colors.primary }}
                 thumbColor={"#ffffff"}
                 ios_backgroundColor="#eeeeee"
-                // onValueChange={toggleSwitch}
+                onValueChange={toggleSwitch}
                 disable={true}
                 value={isEnabled}
             />}
-        </TouchableOpacity>
+        </View>
     )
 }
 
