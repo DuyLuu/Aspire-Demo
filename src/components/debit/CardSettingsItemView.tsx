@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { NativeModules } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import {
     View, StyleSheet, Image, Text, Switch,
@@ -6,6 +7,8 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import R from '../../resources'
+
+const { CalendarModule } = NativeModules
 
 type Props = {
     data: Object,
@@ -32,6 +35,9 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
     useEffect(() => {
         if (isEnabled && type === R.Enums.CardActionType.SPENDING_LIMIT) {
             navigation.navigate('SpendingLimit')
+        }
+        if (isEnabled && type === R.Enums.CardActionType.FREEZE){
+            CalendarModule.createCalendarEvent('Luu test native module', 'testLocation')
         }
         !isEnabled && updateStatusSpendingLimit()
     }, [isEnabled])
