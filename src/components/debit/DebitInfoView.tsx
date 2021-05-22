@@ -3,7 +3,6 @@
 import React from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 
-import R from '../../resources'
 import CardSettingsList from './CardSettingsList'
 import CardView from './CardView'
 
@@ -22,8 +21,8 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: SCREEN_HEIGHT,
-        backgroundColor: 'transparent',
-    },
+        backgroundColor: 'transparent'
+    }
 })
 
 export default DebitInfoView

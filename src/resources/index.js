@@ -8,7 +8,7 @@ const R = {
     Colors,
     Images,
     Constants,
-    Enums,
+    Enums
 }
 
 export default R

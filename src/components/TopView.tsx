@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {
-    View, Text, Image, StyleSheet, TouchableOpacity,
+    View, Text, Image, StyleSheet, TouchableOpacity
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const TopView = (props: Props): JSX.Element => {
-    const { title = '', backButton = false } = props
+    const { title = ' ', backButton = false } = props
     const navigation = useNavigation()
 
     const renderTitle = (): JSX.Element | undefined => {
@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 24,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     backButton: {
         width: 24,
-        height: 24,
+        height: 24
     },
     screenName: {
         position: 'absolute',
@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
         height: 33,
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'white'
     },
     logo: {
         width: 32,
-        height: 32,
-    },
+        height: 32
+    }
 })
 
 export default TopView

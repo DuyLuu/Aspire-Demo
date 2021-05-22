@@ -1,4 +1,4 @@
-import { applyMiddleware, createStore, compose, Store, combineReducers } from 'redux'
+import { applyMiddleware, createStore, Store, combineReducers } from 'redux'
 import { persistStore, persistReducer, Persistor } from 'redux-persist'
 import thunk from 'redux-thunk'
 import createSagaMiddleware from 'redux-saga'
@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import user from './user'
 const persistConfig = {
     key: 'root',
-    storage: AsyncStorage,
-  }
+    storage: AsyncStorage
+}
 const sagaMiddleware = createSagaMiddleware()
 
 const combined = combineReducers({ user })

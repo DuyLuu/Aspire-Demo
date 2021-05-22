@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { FlatList, View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { ConnectedProps, connect } from 'react-redux'
 
 import R from '../../resources'
@@ -12,7 +12,7 @@ type MappedProps = {
 }
 const mapState = (state: RootState): MappedProps => ({
     spendingLimit: state.user?.spendingLimit,
-    currentSpending: state.user?.userInfo?.spending,
+    currentSpending: state.user?.userInfo?.spending
 })
 const connector = connect(mapState, null)
 interface Props extends ConnectedProps<typeof connector> {}
@@ -53,19 +53,19 @@ const styles = StyleSheet.create({
         marginTop: 90,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        paddingTop: 180,
+        paddingTop: 180
     },
     spendingLimit: {
         height: 24,
         flexDirection: 'row',
         marginHorizontal: 24,
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     currentSpend: {
-        color: R.Colors.primary,
+        color: R.Colors.primary
     },
     spendingLimitText: {
-        color: R.Colors.subText,
+        color: R.Colors.subText
     }
 })
 

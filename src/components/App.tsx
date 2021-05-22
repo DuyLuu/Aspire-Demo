@@ -12,16 +12,16 @@ import SpendingLimitScreen from './spending/SpendingLimitScreen'
 const MainStack = createStackNavigator<DebitNavigator>()
 
 const App = (): JSX.Element => {
-	return (
-		<NavigationContainer>
-			<SafeAreaProvider>
-				<MainStack.Navigator headerMode="none" initialRouteName="DebitCard">
-					<MainStack.Screen name="DebitCard" component={DebitCardScreen} />
-					<MainStack.Screen name="SpendingLimit" component={SpendingLimitScreen} />
-				</MainStack.Navigator>
-			</SafeAreaProvider>
-		</NavigationContainer>
-	)
+    return (
+        <NavigationContainer>
+            <SafeAreaProvider>
+                <MainStack.Navigator headerMode="none" initialRouteName="DebitCard">
+                    <MainStack.Screen name="DebitCard" component={DebitCardScreen} />
+                    <MainStack.Screen name="SpendingLimit" component={SpendingLimitScreen} />
+                </MainStack.Navigator>
+            </SafeAreaProvider>
+        </NavigationContainer>
+    )
 }
 
 export default App

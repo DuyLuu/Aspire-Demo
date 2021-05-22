@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from 'react'
 import {
-    View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions,
+    View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions
 } from 'react-native'
 import { ConnectedProps, connect } from 'react-redux'
 
@@ -16,7 +16,7 @@ type MappedProps = {
     userInfo: UserInfoType
 }
 const mapState = (state: RootState): MappedProps => ({
-    userInfo: state.user.userInfo,
+    userInfo: state.user.userInfo
 })
 
 const connector = connect(mapState, null)
@@ -28,12 +28,12 @@ const CardView = (props: Props): JSX.Element => {
     const hideCardNumberAction = useCallback((): void => {
         setHideCardNumber(!hideCardNumber)
     })
-    const textHideNumberButton = hideCardNumber ? "Hide card number" : "Show card number"
+    const textHideNumberButton = hideCardNumber ? 'Hide card number' : 'Show card number'
     const iconHideNumberButton = hideCardNumber ? R.Images.HideNumberIcon : R.Images.ShowNumberIcon
 
-    const cvvText = hideCardNumber ? userInfo?.cvv : "***"
-    const numerCard = userInfo?.cardNumber
-        && (hideCardNumber ? formartNumberCard(userInfo?.cardNumber) : hideNumber(userInfo?.cardNumber))
+    const cvvText = hideCardNumber ? userInfo?.cvv : '***'
+    const numerCard = userInfo?.cardNumber &&
+        (hideCardNumber ? formartNumberCard(userInfo?.cardNumber) : hideNumber(userInfo?.cardNumber))
 
     return (
         <View style={styles.container}>
@@ -75,76 +75,76 @@ const styles = StyleSheet.create({
         width: WIDTH - 48,
         height: 255,
         backgroundColor: 'transparent',
-        alignItems: "flex-end",
-        marginLeft: 24,
+        alignItems: 'flex-end',
+        marginLeft: 24
     },
     cardView: {
         ...StyleSheet.absoluteFillObject,
         top: 35,
         backgroundColor: R.Colors.primary,
         borderRadius: 12,
-        padding: PADDING,
+        padding: PADDING
     },
     aspireLogo: {
         position: 'absolute',
         top: PADDING,
         right: PADDING,
         width: 74,
-        height: 21,
+        height: 21
     },
     visaLogo: {
         position: 'absolute',
         bottom: PADDING,
         right: PADDING,
         width: 59,
-        height: 20,
+        height: 20
     },
     userName: {
-        color: "white",
+        color: 'white',
         fontSize: 22,
-        fontWeight: "bold",
-        marginTop: 45,
+        fontWeight: 'bold',
+        marginTop: 45
     },
     cardNumber: {
         marginTop: 24,
         fontSize: 14,
-        fontWeight: "bold",
-        color: "white",
+        fontWeight: 'bold',
+        color: 'white'
     },
     expireView: {
         flexDirection: 'row',
-        marginTop: 15,
+        marginTop: 15
     },
     expireDateText: {
         fontSize: 13,
-        color: "white",
+        color: 'white',
         marginRight: 32,
-        fontWeight: '700',
+        fontWeight: '700'
     },
     cvvText: {
         fontSize: 13,
-        color: "white",
-        fontWeight: '700',
+        color: 'white',
+        fontWeight: '700'
     },
     hideCardNumer: {
         width: 151,
         height: 44,
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
-        backgroundColor: "white",
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'center',
-        paddingTop: 10,
+        paddingTop: 10
     },
     hideCardNumerIcon: {
         width: 16,
         height: 16,
-        marginRight: 8,
+        marginRight: 8
     },
     hideCardNumberText: {
-        color: R.Colors.primary,  
-        fontSize: 12,
-    },
+        color: R.Colors.primary,
+        fontSize: 12
+    }
 })
 
 export default connector(CardView)

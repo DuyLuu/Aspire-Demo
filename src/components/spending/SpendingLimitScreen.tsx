@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react'
 import {
     SafeAreaView, StyleSheet, Text,
     View, Image, Dimensions,
-    TouchableOpacity,
+    TouchableOpacity
 } from 'react-native'
 import { connect, ConnectedProps } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
@@ -21,11 +21,11 @@ type MappedProps = {
     spendingLimit: string
 }
 const mapState = (state: RootState): MappedProps => ({
-    spendingLimit: state.user.spendingLimit,
+    spendingLimit: state.user.spendingLimit
 })
 
 const mapDispatch = {
-    updateSpendingLimit: UserAction.updateSpendingLimit,
+    updateSpendingLimit: UserAction.updateSpendingLimit
 }
 
 const connector = connect(mapState, mapDispatch)
@@ -62,9 +62,11 @@ const SpendingLimitScreen = (props: Props): JSX.Element => {
                     </Text>
                     <View style={styles.selectingView}>
                         {R.Constants.ListSpendingLimit.map((value: string, index: number) => {
-                            const hightlightStyle = index === selectedIndex ? {
-                                borderWidth: 2, borderColor: R.Colors.primary,
-                            }: {}
+                            const hightlightStyle = index === selectedIndex
+                                ? {
+                                    borderWidth: 2, borderColor: R.Colors.primary
+                                }
+                                : {}
                             return (
                                 <TouchableOpacity
                                     key={`${value}-${index}`}
@@ -90,14 +92,14 @@ const SpendingLimitScreen = (props: Props): JSX.Element => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: R.Colors.header,
-        flex: 1,
+        flex: 1
     },
     titleScreen: {
         fontSize: 24,
         fontWeight: 'bold',
         height: 33,
         color: 'white',
-        marginLeft: 24,
+        marginLeft: 24
     },
     contentView: {
         flex: 1,
@@ -107,31 +109,31 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         padding: 24,
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     topContent: {
         flexDirection: 'row',
         marginTop: 8,
-        marginBottom: 13,
+        marginBottom: 13
     },
     icon: {
         width: 16,
-        height: 16,
+        height: 16
     },
     guideline: {
         fontSize: 14,
-        marginLeft: 8,
+        marginLeft: 8
     },
     line: {
         height: StyleSheet.hairlineWidth,
         width: '100%',
         backgroundColor: R.Colors.subText,
-        marginTop: 8,
+        marginTop: 8
     },
     descriptionText: {
         color: R.Colors.subText,
         fontSize: 13,
-        marginTop: 8,
+        marginTop: 8
     },
     saveButton: {
         bottom: 0,
@@ -140,29 +142,29 @@ const styles = StyleSheet.create({
         borderRadius: 28,
         backgroundColor: R.Colors.primary,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     saveButtonTitle: {
         fontSize: 16,
-        color: 'white',
+        color: 'white'
     },
     selectingView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 32,
+        marginTop: 32
     },
     selectedButton: {
         width: (SCREEN_WIDTH - (24 * 2) - 12 * 2) / 3,
         height: 40,
         backgroundColor: '#20D16712',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     selectedButtonText: {
         color: R.Colors.primary,
-        fontSize: 12,
-    },
+        fontSize: 12
+    }
 })
 
 export default connector(SpendingLimitScreen)

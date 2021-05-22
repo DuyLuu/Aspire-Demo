@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { NativeModules } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import {
-    View, StyleSheet, Image, Text, Switch,
+    NativeModules,
+    View, StyleSheet, Image, Text, Switch
 } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation } from '@react-navigation/native'
 
 import R from '../../resources'
 
@@ -17,7 +16,7 @@ type Props = {
 
 const CardSettingsItemView = (props: Props): JSX.Element => {
     const {
-        title, sub, haveSwitch, icon, type,
+        title, sub, haveSwitch, icon, type
     } = props.data
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
@@ -25,8 +24,8 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
         setIsEnabled(value)
     }
     const updateStatusSpendingLimit = useCallback(() => {
-        type === R.Enums.CardActionType.SPENDING_LIMIT
-                && props.showSpendingLimit?.(isEnabled)
+        type === R.Enums.CardActionType.SPENDING_LIMIT &&
+                props.showSpendingLimit?.(isEnabled)
     }, [isEnabled])
     useEffect(() => {
         const didFocusListener = navigation.addListener('focus', updateStatusSpendingLimit)
@@ -36,7 +35,7 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
         if (isEnabled && type === R.Enums.CardActionType.SPENDING_LIMIT) {
             navigation.navigate('SpendingLimit')
         }
-        if (isEnabled && type === R.Enums.CardActionType.FREEZE){
+        if (isEnabled && type === R.Enums.CardActionType.FREEZE) {
             CalendarModule.createCalendarEvent('Luu test native module', 'testLocation')
         }
         !isEnabled && updateStatusSpendingLimit()
@@ -51,8 +50,8 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
             </View>
             {haveSwitch && <Switch
                 style={styles.switch}
-                trackColor={{ false: "#eeeeee", true: R.Colors.primary }}
-                thumbColor={"#ffffff"}
+                trackColor={{ false: '#eeeeee', true: R.Colors.primary }}
+                thumbColor={'#ffffff'}
                 ios_backgroundColor="#eeeeee"
                 onValueChange={toggleSwitch}
                 disable={true}
@@ -69,28 +68,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 24,
         paddingVertical: 16,
-        alignItems: 'center',
+        alignItems: 'center'
     },
     icon: {
         width: 32,
         height: 32,
-        marginRight: 12,
+        marginRight: 12
     },
     title: {
         fontSize: 14,
         color: '#000000',
-        marginBottom: 4,
+        marginBottom: 4
     },
     sub: {
         fontSize: 11,
-        color: '#00000066',
+        color: '#00000066'
     },
     switch: {
         position: 'absolute',
         right: 24,
         top: 24,
-        transform: [{ scaleX: .8 }, { scaleY: .8 }],
-    },
+        transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }]
+    }
 })
 
 export default CardSettingsItemView
