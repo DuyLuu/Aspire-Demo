@@ -19,6 +19,10 @@ RCT_EXPORT_METHOD(createCalendarEvent:(NSString *)name location:(NSString *)loca
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
 
+- (dispatch_queue_t)methodQueue {
+  return dispatch_get_main_queue(); // use main thread only iOS API.
+}
+
 - (NSDictionary *)constantsToExport {
   return @{@"DEFAULT_EVENT_NAME": @"Luu event"};
 }
