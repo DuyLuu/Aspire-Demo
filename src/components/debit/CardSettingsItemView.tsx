@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import {
-    NativeModules,
     View, StyleSheet, Image, Text, Switch
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import R from '../../resources'
-
-const { CalendarModule } = NativeModules
+import CalendarModule from '../../nativeModules/CalendarModule'
 
 type Props = {
     data: Object,
@@ -18,6 +16,7 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
     const {
         title, sub, haveSwitch, icon, type
     } = props.data
+    const { DEFAULT_EVENT_NAME } = CalendarModule.getConstants()
     const navigation = useNavigation()
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = (value: boolean) => {
@@ -37,6 +36,7 @@ const CardSettingsItemView = (props: Props): JSX.Element => {
         }
         if (isEnabled && type === R.Enums.CardActionType.FREEZE) {
             CalendarModule.createCalendarEvent('Luu test native module', 'testLocation')
+            console.log('DEFAULT_EVENT_NAME', DEFAULT_EVENT_NAME)
         }
         !isEnabled && updateStatusSpendingLimit()
     }, [isEnabled])

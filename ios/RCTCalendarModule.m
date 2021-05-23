@@ -15,7 +15,16 @@ RCT_EXPORT_METHOD(createCalendarEvent:(NSString *)name location:(NSString *)loca
 {
  RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
 }
+
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
+
+- (NSDictionary *)constantsToExport {
+  return @{@"DEFAULT_EVENT_NAME": @"Luu event"};
+}
+
++ (BOOL)requiresMainQueueSetup {
+  return YES;
+}
 
 @end
