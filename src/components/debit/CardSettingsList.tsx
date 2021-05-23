@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { View, StyleSheet, Text } from 'react-native'
 import { ConnectedProps, connect } from 'react-redux'
+import AppInfo from 'react-native-app-info'
 
 import R from '../../resources'
 import CardSettingsItemView from './CardSettingsItemView'
@@ -41,11 +42,21 @@ const CardSettingsList = (props: Props): JSX.Element => {
                     />
                 )
             })}
+            <View style={styles.appInfo}>
+                <Text>AppVersion: {AppInfo.appVersion}</Text>
+                <Text>BuildVersion: {AppInfo.buildVersion}</Text>
+                <Text>BundleIdentifier: {AppInfo.bundleIdentifier}</Text>
+                <Text>Flavor: {AppInfo.flavor}</Text>
+                <Text>DeviceModel: {AppInfo.deviceModel}</Text>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    appInfo: {
+        padding: 16
+    },
     container: {
         backgroundColor: 'white',
         width: '100%',
@@ -53,7 +64,8 @@ const styles = StyleSheet.create({
         marginTop: 90,
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
-        paddingTop: 180
+        paddingTop: 180,
+        alignItems: 'center'
     },
     spendingLimit: {
         height: 24,
