@@ -1,25 +1,23 @@
 
-function handleFetch(url: string) {
+function handleFetch (url: string) {
     const defaultOptions = {
-        method: 'GET',
+        method: 'GET'
     }
     return Promise.race([
         new Promise<T>((resolve, reject) => {
             fetch(url, defaultOptions).then((response) => {
-                console.log('=== fetch res')
                 if (response.status === 500) {
                     return response.text()
                 }
                 return response.json()
             }).then((responseJson) => {
-                console.log('=== fetch responseJson', responseJson)
                 resolve(responseJson)
             })
-            .catch(reject)
+                .catch(reject)
         }),
-        new Promise<T>((_, reject) => {
+        new Promise<T>((resolve, reject) => {
             setTimeout(() => reject(new Error('ErrorTimeOut')), 15000)
-        }),
+        })
     ])
 }
 

@@ -1,7 +1,8 @@
 
 const initialState = {
     spendingLimit: '',
-    userInfo: undefined
+    userInfo: undefined,
+    isLoggedIn: false
 }
 
 export default (state = initialState, action) => {
@@ -20,6 +21,15 @@ export default (state = initialState, action) => {
             ...state,
             userInfo: data
         }
+    }
+    case 'LOGGED_IN': {
+        return {
+            ...state,
+            isLoggedIn: true
+        }
+    }
+    case 'LOGGED_OUT': {
+        return initialState
     }
     default:
         return state

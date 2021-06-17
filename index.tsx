@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import { configReduxStore } from './src/reducers'
 import App from './src/components/App'
-import rootSaga from './src/reducers/saga'
+import rootSaga from './src/actions/saga'
 
 const { persistor, store, sagaMiddleware } = configReduxStore()
 

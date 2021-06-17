@@ -1,1 +1,1 @@
-export { default as UserAction } from './User'
+export { default as UserAction } from './user'
