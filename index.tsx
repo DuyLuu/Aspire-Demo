@@ -1,8 +1,6 @@
 
 import React from 'react'
-
-import { registerRootComponent } from 'expo'
-
+import { AppRegistry } from 'react-native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
 
@@ -24,4 +22,4 @@ const Root = (): JSX.Element => {
 
 sagaMiddleware.run(rootSaga)
 
-registerRootComponent(Root)
+AppRegistry.registerComponent('AspireDemo', () => Root)
