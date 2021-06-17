@@ -4,26 +4,15 @@ import React, { useCallback, useState } from 'react'
 import {
     View, StyleSheet, Image, Text, TouchableWithoutFeedback, Dimensions
 } from 'react-native'
-import { ConnectedProps, connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import R from '../../resources'
-import { UserInfoType } from '../../types'
 
 const PADDING = 24
 const WIDTH = Dimensions.get('window').width
 
-type MappedProps = {
-    userInfo: UserInfoType
-}
-const mapState = (state: RootState): MappedProps => ({
-    userInfo: state.user.userInfo
-})
-
-const connector = connect(mapState, null)
-interface Props extends ConnectedProps<typeof connector> {}
-
 const CardView = (props: Props): JSX.Element => {
-    const { userInfo } = props
+    const userInfo = useSelector(root => root.user?.userInfo)
     const [hideCardNumber, setHideCardNumber] = useState(false)
     const hideCardNumberAction = useCallback((): void => {
         setHideCardNumber(!hideCardNumber)
@@ -147,4 +136,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connector(CardView)
+export default CardView

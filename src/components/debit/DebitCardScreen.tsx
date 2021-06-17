@@ -3,38 +3,20 @@ import {
     StyleSheet, Text, View, ScrollView,
     SafeAreaView, StatusBar
 } from 'react-native'
-import { connect, ConnectedProps } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import BalanceView from './BalanceView'
 
 import DebitInfoView from './DebitInfoView'
 import TopView from '../TopView'
 import { UserAction } from '../../actions'
-import { RootState } from '../../reducers'
-
-type MappedProps = {
-    availableBalance: string
-}
-const mapState = (state: RootState): MappedProps => {
-    return {
-        availableBalance: state.user?.userInfo?.availableBalance
-    }
-}
-
-const mapDispatch = (dispatch) => {
-    return {
-        getUserInfo: () => dispatch(UserAction.getUserInfo())
-    }
-}
-
-const connector = connect(mapState, mapDispatch)
-interface Props extends ConnectedProps<typeof connector> {}
 
 const DebitCardScreen = (props: Props): JSX.Element => {
-    const { getUserInfo, availableBalance } = props
+    const availableBalance = useSelector(state => state.user?.userInfo?.availableBalance)
+    const dispatch = useDispatch()
     useEffect(() => {
-        getUserInfo()
-    }, [getUserInfo])
+        dispatch(UserAction.getUserInfo())
+    }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -60,7 +42,7 @@ const DebitCardScreen = (props: Props): JSX.Element => {
     )
 }
 
-export default connector(DebitCardScreen)
+export default DebitCardScreen
 
 const styles = StyleSheet.create({
     container: {

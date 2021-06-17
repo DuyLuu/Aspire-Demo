@@ -1,24 +1,13 @@
 import React, { useState } from 'react'
 
 import { View, StyleSheet, Text } from 'react-native'
-import { ConnectedProps, connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import R from '../../resources'
 import CardSettingsItemView from './CardSettingsItemView'
 
-type MappedProps = {
-    spendingLimit: string,
-    currentSpending: number,
-}
-const mapState = (state: RootState): MappedProps => ({
-    spendingLimit: state.user?.spendingLimit,
-    currentSpending: state.user?.userInfo?.spending
-})
-const connector = connect(mapState, null)
-interface Props extends ConnectedProps<typeof connector> {}
-
-const CardSettingsList = (props: Props): JSX.Element => {
-    const { spendingLimit, currentSpending } = props
+const CardSettingsList = (): JSX.Element => {
+    const user = useSelector(root => root.user)
     const [showSpendingLimit, setShowSpendingLimit] = useState(false)
 
     return (
@@ -27,8 +16,8 @@ const CardSettingsList = (props: Props): JSX.Element => {
                 <View style={styles.spendingLimit}>
                     <Text>Debit card spending limit</Text>
                     <Text>
-                        <Text style={styles.currentSpend}>{`$${currentSpending}`}</Text>
-                        <Text style={styles.spendingLimitText}>{` | $${spendingLimit}`}</Text>
+                        <Text style={styles.currentSpend}>{`$${user?.userInfo?.spending}`}</Text>
+                        <Text style={styles.spendingLimitText}>{` | $${user?.spendingLimit}`}</Text>
                     </Text>
                 </View>
             )}
@@ -70,4 +59,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connector(CardSettingsList)
+export default CardSettingsList

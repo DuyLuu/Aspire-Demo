@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useMemo } from 'react'
 
 import {
     SafeAreaView, StyleSheet, Text,
     View, Image, Dimensions,
     TouchableOpacity
 } from 'react-native'
-import { connect, ConnectedProps } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
 import R from '../../resources'
@@ -17,24 +17,14 @@ import { UserAction } from '../../actions'
 const SCREEN_WIDTH = Dimensions.get('window').width
 const PADDING_SAVE_BUTTON = 56
 
-type MappedProps = {
-    spendingLimit: string
-}
-const mapState = (state: RootState): MappedProps => ({
-    spendingLimit: state.user.spendingLimit
-})
-
-const mapDispatch = {
-    updateSpendingLimit: UserAction.updateSpendingLimit
-}
-
-const connector = connect(mapState, mapDispatch)
-interface Props extends ConnectedProps<typeof connector> {}
-
 const SpendingLimitScreen = (props: Props): JSX.Element => {
-    const { updateSpendingLimit, spendingLimit } = props
+    const dispatch = useDispatch()
+    const user = useSelector(root => root.user)
     const navigation = useNavigation()
-    const currentLimitIndex = Math.max(R.Constants.ListSpendingLimit.findIndex(item => item === spendingLimit), 0)
+
+    const currentLimitIndex = useMemo(() => Math.max(
+        R.Constants.ListSpendingLimit.findIndex(item => item === user?.spendingLimit),
+        0))
     const [selectedIndex, setSelectedIndex] = useState(currentLimitIndex)
     const selectSpendingLimit = useCallback((index: number) => () => {
         setSelectedIndex(index)
@@ -42,9 +32,9 @@ const SpendingLimitScreen = (props: Props): JSX.Element => {
     const selectedValue = R.Constants.ListSpendingLimit[selectedIndex]
 
     const saveSpendingLimit = useCallback((): void => {
-        updateSpendingLimit(selectedValue)
+        dispatch(UserAction.updateSpendingLimit(selectedValue))
         navigation.goBack()
-    }, [navigation, updateSpendingLimit, selectedValue])
+    }, [navigation, selectedValue])
     return (
         <SafeAreaView style={styles.container}>
             <TopView backButton={true} />
@@ -167,4 +157,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connector(SpendingLimitScreen)
+export default SpendingLimitScreen
