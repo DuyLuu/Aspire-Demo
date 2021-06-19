@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSelector } from 'react-redux'
+import firebase from 'firebase'
 
 import { DebitNavigator } from '../types'
 
@@ -26,6 +27,18 @@ const MainScreen = () => {
 }
 
 const App = (): JSX.Element => {
+    useEffect(() => {
+        const firebaseConfig = {
+            apiKey: 'AIzaSyDmyNA83cFOsH0J7vyZ0LzKiqVBUvjYmzw',
+            authDomain: 'aspire-9eb45.firebaseapp.com',
+            projectId: 'aspire-9eb45',
+            storageBucket: 'aspire-9eb45.appspot.com',
+            messagingSenderId: '967020336424',
+            appId: '1:967020336424:web:1cea85a7d412d924766c1d',
+            measurementId: 'G-4QYEVQ58EV'
+        }
+        firebase.initializeApp(firebaseConfig)
+    }, [])
     const user = useSelector(root => root.user)
     return (
         <NavigationContainer>
