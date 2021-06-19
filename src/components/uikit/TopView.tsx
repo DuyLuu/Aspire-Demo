@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-import R from '../resources'
+import R from '../../resources'
 
 type Props = {
     title?: string,
@@ -14,7 +14,7 @@ type Props = {
 
 const TopView = (props: Props): JSX.Element => {
     const { title = ' ', backButton = false } = props
-    const navigation = useNavigation()
+    const navigation = useNavigation?.()
 
     const renderTitle = (): JSX.Element | undefined => {
         if (title) {
@@ -23,7 +23,7 @@ const TopView = (props: Props): JSX.Element => {
         return undefined
     }
     const onBackPress = (): void => {
-        navigation.goBack()
+        navigation?.goBack()
     }
     return (
         <View style={styles.container}>

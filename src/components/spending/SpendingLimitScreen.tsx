@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import R from '../../resources'
 import BalanceView from '../debit/BalanceView'
-import TopView from '../TopView'
+import TopView from '../uikit/TopView'
 
 import { UserAction } from '../../actions'
 

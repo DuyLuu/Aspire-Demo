@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import BalanceView from './BalanceView'
 
 import DebitInfoView from './DebitInfoView'
-import TopView from '../TopView'
+import TopView from '../uikit/TopView'
 import { UserAction } from '../../actions'
 
 const DebitCardScreen = (props: Props): JSX.Element => {

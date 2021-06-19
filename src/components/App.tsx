@@ -15,6 +15,7 @@ import SignInScreen from './login/SignInScreen'
 import UserInfoScreen from './settings/UserInfoScreen'
 
 const MainStack = createStackNavigator<DebitNavigator>()
+const LoginStack = createStackNavigator<LoginNavigator>()
 const Tab = createBottomTabNavigator()
 
 const MainScreen = () => {
@@ -23,6 +24,14 @@ const MainScreen = () => {
             <MainStack.Screen name="DebitCard" component={DebitCardScreen} />
             <MainStack.Screen name="SpendingLimit" component={SpendingLimitScreen} />
         </MainStack.Navigator>
+    )
+}
+
+const LoginScreen = () => {
+    return (
+        <LoginStack.Navigator>
+            <LoginStack.Screen name="SignIn" component={SignInScreen} options={{ title: 'SignIn' }} />
+        </LoginStack.Navigator>
     )
 }
 
@@ -37,7 +46,11 @@ const App = (): JSX.Element => {
             appId: '1:967020336424:web:1cea85a7d412d924766c1d',
             measurementId: 'G-4QYEVQ58EV'
         }
-        firebase.initializeApp(firebaseConfig)
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig)
+        } else {
+            firebase.app()
+        }
     }, [])
     const user = useSelector(root => root.user)
     return (
@@ -50,7 +63,7 @@ const App = (): JSX.Element => {
                             <Tab.Screen name="Settings" component={UserInfoScreen} />
                         </Tab.Navigator>
                     )
-                    : <SignInScreen />}
+                    : <LoginScreen />}
             </SafeAreaProvider>
         </NavigationContainer>
     )
