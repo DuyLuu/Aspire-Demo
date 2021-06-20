@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
 import { useDispatch } from 'react-redux'
+import firebase from 'firebase'
 
 import FloatTextInput from './FloatTextInput'
 import Space from '../uikit/Space'
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        paddingTop: 64
+        paddingTop: 32
     },
     button: {
         backgroundColor: 'purple',
@@ -25,6 +26,23 @@ const SignInScreen = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const signInOnPress = useCallback(() => {
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((res) => {
+                signInSuccess()
+            })
+            .catch(() => {
+                firebase.auth().createUserWithEmailAndPassword(email, password)
+            })
+    }, [email, password])
+
+    const signInSuccess = useCallback(() => {
+        dispatch({
+            type: 'LOGGED_IN',
+            payload: true
+        })
+    }, [dispatch])
 
     return (
         <View style={styles.container}>
@@ -43,12 +61,7 @@ const SignInScreen = () => {
             <Space height={32} />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => {
-                    dispatch({
-                        type: 'LOGGED_IN',
-                        payload: true
-                    })
-                }}
+                onPress={signInOnPress}
             >
                 <Text style={{ color: 'white', fontSize: 16 }}>Sign In</Text>
             </TouchableOpacity>

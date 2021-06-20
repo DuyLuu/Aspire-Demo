@@ -1,12 +1,6 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 
-// type Props = {
-//     placeholder?: string,
-//     value: string,
-//     onChangeText: Function,
-// }
-
 const FloatTextInput = (props) => {
     return (
         <TextInput
@@ -15,7 +9,8 @@ const FloatTextInput = (props) => {
                 width: '90%',
                 borderColor: 'grey',
                 borderWidth: 1,
-                padding: 8
+                padding: 8,
+                borderRadius: 4
             }}
             autoCapitalize="none"
             autoCorrect={false}
