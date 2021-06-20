@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import firebase from 'firebase'
 
 import { DebitNavigator } from '../types'
@@ -51,8 +51,29 @@ const App = (): JSX.Element => {
         } else {
             firebase.app()
         }
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                signInSuccess()
+            } else {
+                signOut()
+            }
+        })
     }, [])
     const user = useSelector(root => root.user)
+    const dispatch = useDispatch()
+    const signInSuccess = useCallback(() => {
+        dispatch({
+            type: 'LOGGED_IN',
+            payload: true
+        })
+    }, [dispatch])
+
+    const signOut = useCallback(() => {
+        dispatch({
+            type: 'LOGGED_OUT'
+        })
+    }, [dispatch])
+
     return (
         <NavigationContainer>
             <SafeAreaProvider>

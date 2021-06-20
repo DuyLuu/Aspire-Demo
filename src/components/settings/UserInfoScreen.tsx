@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
-import { useDispatch } from 'react-redux'
+import firebase from 'firebase'
 import AppInfo from 'react-native-app-info'
 
 const styles = StyleSheet.create({
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 })
 
 const UserInfoScreen = () => {
-    const dispatch = useDispatch()
     return (
         <View style={{ flex: 1, backgroundColor: '#0C365A' }}>
             <View style={styles.appInfo}>
@@ -26,9 +25,7 @@ const UserInfoScreen = () => {
                 <Text style={styles.textStyle}>DeviceModel: {AppInfo.deviceModel}</Text>
             </View>
             <Button title="Sign out" onPress={() => {
-                dispatch({
-                    type: 'LOGGED_OUT'
-                })
+                firebase.auth().signOut()
             }} />
         </View>
     )

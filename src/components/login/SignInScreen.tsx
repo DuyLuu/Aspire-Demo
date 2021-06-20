@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react'
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
-import { useDispatch } from 'react-redux'
 import firebase from 'firebase'
 
 import FloatTextInput from './FloatTextInput'
@@ -19,13 +18,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 8
+    },
+    errorMessage: {
+        fontSize: 14,
+        color: 'red'
     }
 })
 
 const SignInScreen = () => {
-    const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     const signInOnPress = useCallback(() => {
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -34,15 +37,18 @@ const SignInScreen = () => {
             })
             .catch(() => {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then((res) => {
+                        signInSuccess()
+                    })
+                    .catch((error) => {
+                        setErrorMessage(error.message)
+                    })
             })
     }, [email, password])
 
     const signInSuccess = useCallback(() => {
-        dispatch({
-            type: 'LOGGED_IN',
-            payload: true
-        })
-    }, [dispatch])
+        setErrorMessage('')
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -59,6 +65,8 @@ const SignInScreen = () => {
                 secureTextEntry
             />
             <Space height={32} />
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <Space height={16} />
             <TouchableOpacity
                 style={styles.button}
                 onPress={signInOnPress}
