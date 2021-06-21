@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react'
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import React, { useCallback, useReducer } from 'react'
+import { View, TouchableOpacity, StyleSheet, Text, ActivityIndicator } from 'react-native'
 import firebase from 'firebase'
 
 import FloatTextInput from './FloatTextInput'
@@ -25,12 +25,51 @@ const styles = StyleSheet.create({
     }
 })
 
-const SignInScreen = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
+const initialState = {
+    email: '',
+    password: '',
+    errorMessage: '',
+    loading: false
+}
 
+const reducer = (state, action) => {
+    switch (action.type) {
+    case 'SignIn':
+        return {
+            ...state,
+            errorMessage: '',
+            loading: true
+        }
+    case 'SignIn_Failure':
+        return {
+            ...state,
+            errorMessage: action.payload,
+            loading: false
+        }
+    case 'SignIn_Success':
+        return state
+    case 'Email_Typing':
+        return {
+            ...state,
+            errorMessage: '',
+            email: action.payload
+        }
+    case 'Password_Typing':
+        return {
+            ...state,
+            errorMessage: '',
+            password: action.payload
+        }
+    default:
+        return state
+    }
+}
+
+const SignInScreen = () => {
+    const [state, dispatch] = useReducer(reducer, initialState)
+    const { email, password, errorMessage, loading } = state
     const signInOnPress = useCallback(() => {
+        dispatch({ type: 'SignIn' })
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((res) => {
                 signInSuccess()
@@ -41,13 +80,13 @@ const SignInScreen = () => {
                         signInSuccess()
                     })
                     .catch((error) => {
-                        setErrorMessage(error.message)
+                        dispatch({ type: 'SignIn_Failure', payload: error.message })
                     })
             })
     }, [email, password])
 
     const signInSuccess = useCallback(() => {
-        setErrorMessage('')
+        dispatch({ type: 'SignIn_Success' })
     }, [])
 
     return (
@@ -55,13 +94,13 @@ const SignInScreen = () => {
             <FloatTextInput
                 placeholder="Email"
                 value={email}
-                onChangeText={(text) => setEmail(text)}
+                onChangeText={(text) => dispatch({ type: 'Email_Typing', payload: text })}
             />
             <Space height={8} />
             <FloatTextInput
                 placeholder="Password"
                 value={password}
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={(text) => dispatch({ type: 'Password_Typing', payload: text })}
                 secureTextEntry
             />
             <Space height={32} />
@@ -71,7 +110,9 @@ const SignInScreen = () => {
                 style={styles.button}
                 onPress={signInOnPress}
             >
-                <Text style={{ color: 'white', fontSize: 16 }}>Sign In</Text>
+                {loading
+                    ? <ActivityIndicator />
+                    : <Text style={{ color: 'white', fontSize: 16 }}>Sign In</Text>}
             </TouchableOpacity>
         </View>
     )

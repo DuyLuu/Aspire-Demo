@@ -2,7 +2,8 @@
 const initialState = {
     spendingLimit: '',
     userInfo: undefined,
-    isLoggedIn: false
+    isLoggedIn: false,
+    loggedInUser: {}
 }
 
 export default (state = initialState, action) => {
@@ -25,7 +26,8 @@ export default (state = initialState, action) => {
     case 'LOGGED_IN': {
         return {
             ...state,
-            isLoggedIn: true
+            isLoggedIn: true,
+            loggedInUser: action.payload
         }
     }
     case 'LOGGED_OUT': {

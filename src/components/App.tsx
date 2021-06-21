@@ -53,7 +53,7 @@ const App = (): JSX.Element => {
         }
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                signInSuccess()
+                signInSuccess(user)
             } else {
                 signOut()
             }
@@ -61,10 +61,10 @@ const App = (): JSX.Element => {
     }, [])
     const user = useSelector(root => root.user)
     const dispatch = useDispatch()
-    const signInSuccess = useCallback(() => {
+    const signInSuccess = useCallback((user) => {
         dispatch({
             type: 'LOGGED_IN',
-            payload: true
+            payload: user
         })
     }, [dispatch])
 
